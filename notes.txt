@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset='UTF-8'>
+        <title>Datacenter</title>
+        <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"/>
+    <head>
+    <body>
+        <h1> Datacenter Management </h1>
+
+        <form id= "addForm">
+            <input type= "text" id="addDatacenterLocation" placeholder="Location">
+            <input type= "number" id="addDatacenterCapacity" placeholder="Capacity">
+            <button type="submit">Add Datacenter</button>
+        </form>
+        
+        <form id= "updateForm">
+            <input type = "number" id = "updateDatacenterID" placeholder="Datacenter ID">
+            <input type = "number" id = "updateDatacenterCapacity" placeholder="New Capacity">
+            <button type="submit">Update Datacenter</button>
+        </form>
+
+        <form id= "deleteForm">
+            <input type = "number" id = "deleteDatacenterID" placeholder="Datacenter ID">
+            <button type="submit">Delete Datacenter</button>
+        </form>
+
+        <!-- Display Datacenters -->
+        <div id="datacenterList">
+            <h2>Datacenters</h2>
+            <ul id="datacenterUL"></ul>
+
+    <!-- JavaScript File -->
+    <script src="{{ url_for('static', filename='js/datacenter.js') }}"></script>
+  </body>
+</html>

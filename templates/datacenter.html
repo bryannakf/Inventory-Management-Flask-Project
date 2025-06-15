@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datacenter Management</title>
+  </head>
+  <body>
+    <h1>Datacenter Management</h1>
+
+    <!-- Add Datacenter Form -->
+    <h2>Add Datacenter</h2>
+    <form id="addDatacenterForm">
+      <input type="text" id="addLocation" placeholder="Location" required />
+      <input type="number" id="addCapacity" placeholder="Capacity" required />
+      <button type="submit">Add</button>
+    </form>
+
+    <!-- Update Datacenter Form -->
+    <h2>Update Datacenter</h2>
+    <form id="updateDatacenterForm">
+      <input
+        type="number"
+        id="updateDatacenterID"
+        placeholder="Datacenter ID"
+        required
+      />
+      <input
+        type="number"
+        id="updateCapacity"
+        placeholder="New Capacity"
+        required
+      />
+      <button type="submit">Update</button>
+    </form>
+
+    <!-- Delete Datacenter Form -->
+    <h2>Delete Datacenter</h2>
+    <form id="deleteDatacenterForm">
+      <input
+        type="number"
+        id="deleteDatacenterID"
+        placeholder="Datacenter ID"
+        required
+      />
+      <button type="submit">Delete</button>
+    </form>
+
+    <!-- Display List of Datacenters -->
+    <h2>All Datacenters</h2>
+    <div id="datacenterList"></div>
+
+    <!-- Link to JS -->
+    <script src="{{ url_for('static', filename='js/datacenter.js') }}"></script>
+  </body>
+</html>
