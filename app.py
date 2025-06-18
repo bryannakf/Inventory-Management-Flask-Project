@@ -25,6 +25,40 @@ def initdb_command():
 def inventory():
     return render_template('inventory.html')
 
+@app.route('/api/item', methods=['POST'])
+def api_add_item():
+    data = request.get_json()
+    item_name = data.get('item_name')
+    quantity = data.get('quantity')
+    if not item_name or not quantity:
+        return jsonify({'error': 'Item name and Quantity are required'}), 400
+    add_item(item_name, quantity)
+    return jsonify({'message': 'Item added successfully'}), 201
+
+@app.route('/api/items', methods=['GET'])
+def api_get_items():
+    items = get_items()
+    return jsonify([
+        {'id': item['id'], 'item_name': item['item_name'], 'quantity': item['quantity']}
+        for item in items
+    ])
+
+@app.route("/api/item/<int:id>", methods=["PUT"])
+def api_update_item(id):
+    data = request.get_json()
+    quantity = data.get("quantity")
+    if not quantity:
+        return jsonify({"error": "Quantity required"}), 400
+    update_item(id, quantity)
+    return jsonify({"message": "Item updated"}), 200
+
+@app.route("/api/item/<int:id>", methods=["DELETE"])
+def api_delete_item(id):
+    delete_item(id)
+    return jsonify({"message": "Item deleted"}), 200
+
+
+
 @app.route('/datacenter')
 def datacenter():
     return render_template ('datacenter.html')
