@@ -12,7 +12,7 @@ def get_items():
 
 def update_item(item_id, quantity):
     db = get_db()
-    db.execute('UPDATE inventory SET quantity = ?, WHERE id =?', (quantity, item_id))
+    db.execute('UPDATE inventory SET quantity = ? WHERE id =?', (quantity, item_id))
     db.commit()
     
 def delete_item(item_id):

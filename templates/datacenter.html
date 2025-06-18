@@ -45,11 +45,23 @@
       <button type="submit">Delete</button>
     </form>
 
+    <table id="datacenterTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Location</th>
+          <th>Capacity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be inserted here -->
+      </tbody>
+    </table>
+
     <!-- Display List of Datacenters -->
     <h2>All Datacenters</h2>
     <div id="datacenterList"></div>
-
-    <!-- Link to JS -->
-    <script src="{{ url_for('static', filename='js/datacenter.js') }}"></script>
+    <!-- Javascript file -->
+    <script src="/static/js/datacenter.js"></script>
   </body>
 </html>
