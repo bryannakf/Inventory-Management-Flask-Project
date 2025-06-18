@@ -1,9 +1,9 @@
 from db import get_db
 
 #defining CRUD ops
-def add_item(item_name, quantity):
+def add_item(item_name, quantity, datacenter_id):
     db= get_db()
-    db.execute('INSERT INTO inventory (item_name, quantity) VALUES (?,?)', (item_name, quantity))
+    db.execute('INSERT INTO inventory (item_name, quantity, datacenter_id ) VALUES (?,?,?)', (item_name, quantity, datacenter_id ))
     db.commit()
     
 def get_items():

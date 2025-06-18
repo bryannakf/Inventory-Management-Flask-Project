@@ -11,7 +11,7 @@ function getItems() {
         row.innerHTML = `
           <td>${item.id}</td>
           <td>${item.item_name}</td>
-          <td>${item.quantity}</td>
+          <td>${item.quantity}</td>     
         `;
         tableBody.appendChild(row);
       });
@@ -24,14 +24,15 @@ document.getElementById("addItemForm").addEventListener("submit", function (e) {
   e.preventDefault();
   const item_name = document.getElementById("addItem_name").value;
   const quantity = document.getElementById("addQuantity").value;
-  addItem(item_name, quantity);
+  const datacenter_id = document.getElementById("addDatacenterID").value;
+  addItem(item_name, quantity, datacenter_id);
 });
 
-function addItem(item_name, quantityity) {
+function addItem(item_name, quantity, datacenter_id) {
   fetch("/api/item", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ item_name, quantity }),
+    body: JSON.stringify({ item_name, quantity, datacenter_id }),
   })
     .then((res) => res.json())
     .then((data) => {

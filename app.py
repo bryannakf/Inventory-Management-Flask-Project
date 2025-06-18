@@ -30,9 +30,10 @@ def api_add_item():
     data = request.get_json()
     item_name = data.get('item_name')
     quantity = data.get('quantity')
-    if not item_name or not quantity:
-        return jsonify({'error': 'Item name and Quantity are required'}), 400
-    add_item(item_name, quantity)
+    datacenter_id = data.get('datacenter_id')
+    if not item_name or not quantity or not datacenter_id:
+        return jsonify({'error': 'Item name, Quantity, and Datacenter ID are required'}), 400
+    add_item(item_name, quantity, datacenter_id)
     return jsonify({'message': 'Item added successfully'}), 201
 
 @app.route('/api/items', methods=['GET'])
