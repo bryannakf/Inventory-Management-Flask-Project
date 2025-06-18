@@ -1,6 +1,47 @@
-// Fetch all datacenters on page load
-window.onload = getDatacenters;
+console.log("✅ datacenter.js loaded");
 
+// fetch("/api/getdatacenters")
+//   .then((res) => {
+//     console.log(" Response received:", res);
+//     return res.json();
+//   })
+//   .then((data) => {
+//     console.log(" Data received:", data);
+//     // Your DOM update code here
+//   })
+//   .catch((error) => {
+//     console.error(" Fetch error:", error);
+//   });
+function getDatacenters() {
+  fetch("/api/datacenters")
+    .then((response) => response.json())
+    .then((data) => {
+      const tableBody = document.querySelector("#datacenterTable tbody");
+      tableBody.innerHTML = "";
+      data.forEach((dc) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${dc.id}</td>
+          <td>${dc.location}</td>
+          <td>${dc.capacity}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    })
+    .catch((error) => console.error("Error fetching datacenters:", error));
+}
+
+// document.addEventListener("DOMContentLoaded", getDatacenters);
+
+// function getDatacenters() {
+//   fetch("/api/datacenters")
+//     .then((res) => res.json())
+//     .then((data) => {
+//       console.log(" Data received:", data);
+//       // render datacenters in the table
+//     })
+//     .catch((err) => console.error(" Error fetching datacenters:", err));
+// }
 // Add Datacenter
 document
   .getElementById("addDatacenterForm")
@@ -11,6 +52,17 @@ document
     addDatacenter(location, capacity);
   });
 
+// function addDatacenter(location, capacity) {
+//   fetch("/api/datacenter", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ location, capacity }),
+//   })
+//     .then((res) => res.json())
+//     .then(() => getDatacenters())
+//     .catch((err) => console.error("Add Error:", err));
+// }
+
 function addDatacenter(location, capacity) {
   fetch("/api/datacenter", {
     method: "POST",
@@ -18,8 +70,11 @@ function addDatacenter(location, capacity) {
     body: JSON.stringify({ location, capacity }),
   })
     .then((res) => res.json())
-    .then(() => getDatacenters())
-    .catch((err) => console.error("Add Error:", err));
+    .then((data) => {
+      console.log("Added:", data);
+      getDatacenters();
+    })
+    .catch((err) => console.error("Error adding datacenter:", err));
 }
 
 // Update Datacenter
@@ -59,19 +114,77 @@ function deleteDatacenter(id) {
     .catch((err) => console.error("Delete Error:", err));
 }
 
+const table = document
+  .getElementById("datacenterTable")
+  .getElementsByTagName("tbody")[0];
+
 // Get and display all datacenters
-function getDatacenters() {
+// function getDatacenters() {
+//   fetch("/api/datacenters")
+//     .then((res) => res.json())
+//     .then((data) => {
+//       const div = document.getElementById("datacenterList");
+//       div.innerHTML = "";
+//       data.forEach((dc) => {
+//         div.innerHTML += `<p>ID: ${dc.id}, Location: ${dc.location}, Capacity: ${dc.capacity}</p>`;
+//       });
+//     })
+//     .catch((err) => console.error("Fetch Error:", err));
+// }
+
+// function getDatacenters() {
+//   fetch("/api/getdatacenters")
+//     .then((response) => response.json())
+//     .then((datacenters) => {
+//       const datacenterDiv = document.getElementById("datacenterList");
+//       datcenteraddDatacenterDiv.innerHTML = "";
+//       datacenters.forEach((dc) => {
+//         datacenterDiv.innerHTML += `<div>DataCenter ID: ${dc.id}, Location: ${dc.location}, Capacity: ${dc.capacity}</div>`;
+//         console.log("Fetched datacenters:", datacenters); //added for debugging
+//       });
+//     })
+//     .catch((error) => {
+//       console.error("Error fetching datacenters:", error);
+//     });
+// }
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   fetch("/api/getdatacenters")
+//     .then((response) => response.json())
+//     .then((data) => {
+//       const list = document.getElementById("datacenterList");
+//       list.innerHTML = "";
+//       data.forEach((dc) => {
+//         const item = document.createElement("li");
+//         item.textContent = `Location: ${dc.location}, Capacity: ${dc.capacity}`;
+//         list.appendChild(item);
+//       });
+//     })
+//     .catch((error) => console.error("Error fetching datacenters:", error));
+// });
+// document.addEventListener("DOMContentLoaded", getDatacenters);
+
+document.addEventListener("DOMContentLoaded", () => {
+  getDatacenters();
   fetch("/api/datacenters")
-    .then((res) => res.json())
+    .then((response) => response.json())
     .then((data) => {
-      const div = document.getElementById("datacenterList");
-      div.innerHTML = "";
+      const tableBody = document.querySelector("#datacenterTable tbody");
+      tableBody.innerHTML = "";
       data.forEach((dc) => {
-        div.innerHTML += `<p>ID: ${dc.id}, Location: ${dc.location}, Capacity: ${dc.capacity}</p>`;
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${dc.id}</td>
+          <td>${dc.location}</td>
+          <td>${dc.capacity}</td>
+        `;
+        tableBody.appendChild(row);
       });
     })
-    .catch((err) => console.error("Fetch Error:", err));
-}
+    .catch((error) => console.error("Error fetching datacenters:", error));
+});
+
+// window.onload = getDatacenters;
 
 // // Fetch and display inventory on page load
 // window.onload = getInventory;

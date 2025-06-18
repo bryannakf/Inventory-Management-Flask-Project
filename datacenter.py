@@ -12,7 +12,7 @@ def get_datacenters():
 
 def update_datacenter(datacenter_id, capacity):
     db = get_db()
-    db.execute('UPDATE datacenter SET capacity = ?, WHERE id =?', (capacity, datacenter_id))
+    db.execute('UPDATE datacenter SET capacity = ? WHERE id =?', (datacenter_id, capacity))
     db.commit()
     
 def delete_datacenter(datacenter_id):

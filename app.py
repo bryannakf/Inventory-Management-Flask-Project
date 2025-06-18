@@ -32,10 +32,35 @@ def datacenter():
 @app.route('/api/datacenter', methods=['POST'])
 def api_add_datacenter():
     data = request.get_json()
-    location = data.get('Location')
-    capacity = data.get('Capacity')
+    location = data.get('location')
+    capacity = data.get('capacity')
     if not location or not capacity:
         return jsonify({'error': 'Location and Capacity are required'}), 400
     add_datacenter(location, capacity)
     return jsonify({'message': 'Datacenter added successfully'}), 201
+
+@app.route('/api/datacenters', methods=['GET'])
+def api_get_datacenters():
+    datacenters = get_datacenters()
+    return jsonify([
+        {'id': dc['id'], 'location': dc['location'], 'capacity': dc['capacity']}
+        for dc in datacenters
+    ])
+
+@app.route("/api/datacenter/<int:id>", methods=["PUT"])
+def api_update_datacenter(id):
+    data = request.get_json()
+    capacity = data.get("capacity")
+    if not capacity:
+        return jsonify({"error": "Capacity required"}), 400
+    update_datacenter(id, capacity)
+    return jsonify({"message": "Datacenter updated"}), 200
+
+@app.route("/api/datacenter/<int:id>", methods=["DELETE"])
+def api_delete_datacenter(id):
+    delete_datacenter(id)
+    return jsonify({"message": "Datacenter deleted"}), 200
+
+
+
 
