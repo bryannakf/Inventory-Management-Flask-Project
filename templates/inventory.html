@@ -31,6 +31,12 @@
         placeholder="New Quantity"
         required
       />
+      <input
+        type="number"
+        id="updateDatacenterID"
+        placeholder="Datacenter ID"
+        required
+      />
       <button type="submit">Update</button>
     </form>
 
@@ -41,12 +47,16 @@
       <button type="submit">Delete</button>
     </form>
 
+    <!-- Display List of Items -->
+    <h2>All Items</h2>
+
     <table id="itemTable">
       <thead>
         <tr>
           <th>ID</th>
           <th>Item name</th>
           <th>Quantity</th>
+          <th>Datacenter ID</th>
         </tr>
       </thead>
       <tbody>
@@ -54,8 +64,6 @@
       </tbody>
     </table>
 
-    <!-- Display List of Items -->
-    <h2>All Items</h2>
     <div id="ItemList"></div>
     <!-- Javascript file -->
     <script src="/static/js/inventory.js"></script>

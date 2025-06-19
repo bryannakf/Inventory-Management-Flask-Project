@@ -12,6 +12,7 @@ function getItems() {
           <td>${item.id}</td>
           <td>${item.item_name}</td>
           <td>${item.quantity}</td>     
+          <td>${item.datacenter_id}</td>
         `;
         tableBody.appendChild(row);
       });
@@ -49,14 +50,15 @@ document
     e.preventDefault();
     const id = document.getElementById("updateItemID").value;
     const quantity = document.getElementById("updateQuantity").value;
-    updateItem(id, quantity);
+    const datacenter_id = document.getElementById("updateDatacenterID").value;
+    updateItem(id, quantity, datacenter_id);
   });
 
-function updateItem(id, quantity) {
+function updateItem(id, quantity, datacenter_id) {
   fetch(`/api/item/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ quantity }),
+    body: JSON.stringify({ quantity, datacenter_id }),
   })
     .then((res) => res.json())
     .then(() => getItems())
@@ -96,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${item.id}</td>
           <td>${item.item_name}</td>
           <td>${item.quantity}</td>
+          <td>${item.datacenter_id}</td>
         `;
         tableBody.appendChild(row);
       });

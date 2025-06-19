@@ -40,7 +40,7 @@ def api_add_item():
 def api_get_items():
     items = get_items()
     return jsonify([
-        {'id': item['id'], 'item_name': item['item_name'], 'quantity': item['quantity']}
+        {'id': item['id'], 'item_name': item['item_name'], 'quantity': item['quantity'], 'datacenter_id': item['datacenter_id']}
         for item in items
     ])
 
@@ -48,9 +48,10 @@ def api_get_items():
 def api_update_item(id):
     data = request.get_json()
     quantity = data.get("quantity")
-    if not quantity:
-        return jsonify({"error": "Quantity required"}), 400
-    update_item(id, quantity)
+    datacenter_id = data.get("datacenter_id")
+    if not quantity or not datacenter_id:
+        return jsonify({"error": "Quantity and Datacenter ID required"}), 400
+    update_item(id, quantity, datacenter_id)
     return jsonify({"message": "Item updated"}), 200
 
 @app.route("/api/item/<int:id>", methods=["DELETE"])
