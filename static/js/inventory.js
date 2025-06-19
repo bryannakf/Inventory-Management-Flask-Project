@@ -59,22 +59,6 @@ document
     const quantity = document.getElementById("updateQuantity").value;
     const datacenter_id = document.getElementById("updateDatacenterID").value;
 
-    //     fetch(`/api/item/${id}`, {
-    //       method: "PUT",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify({ quantity, datacenter_id }),
-    //     })
-    //       .then((res) => res.json())
-    //       .then((data) => {
-    //         showMessage(data.message || "Item updated", "green");
-    //         getItems();
-    //       })
-    //       .catch((err) => {
-    //         showMessage("Error updating item", "red");
-    //         console.error("Update error:", err);
-    //       });
-    //   });
-
     fetch(`/api/item/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -109,6 +93,12 @@ document
       showMessage("Please enter a valid item ID", "red");
       return;
     }
+
+    // prompt for confirmation
+    const confirmed = confirm(
+      `Are you sure you want to delete item with ID ${id}?`
+    );
+    if (!confirmed) return;
 
     fetch(`/api/item/${id}`, { method: "DELETE" })
       .then((res) => res.json())
