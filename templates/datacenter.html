@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>Datacenter Management</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
   <body>
     <h1>Datacenter Management</h1>
@@ -63,6 +67,8 @@
     </table>
 
     <div id="datacenterList"></div>
+    <!--Links to logout and admin page-->
+    <p><a href="{{ url_for('logout') }}">Logout</a></p>
     <!-- Javascript file -->
     <script src="/static/js/datacenter.js"></script>
   </body>

@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>Inventory Management</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
   <body>
     <h1>Inventory Management</h1>
@@ -67,6 +71,8 @@
     </table>
 
     <div id="ItemList"></div>
+    <!--Links to logout and admin page-->
+    <p><a href="{{ url_for('logout') }}">Logout</a></p>
     <!-- Javascript file -->
     <script src="/static/js/inventory.js"></script>
   </body>
