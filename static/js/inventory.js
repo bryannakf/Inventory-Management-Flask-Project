@@ -4,7 +4,7 @@ function getItems() {
   fetch("/api/items")
     .then((response) => response.json())
     .then((data) => {
-      const tableBody = document.querySelector("#inventoryTable tbody");
+      const tableBody = document.querySelector("#itemTable tbody");
       tableBody.innerHTML = "";
       data.forEach((item) => {
         const row = document.createElement("tr");
