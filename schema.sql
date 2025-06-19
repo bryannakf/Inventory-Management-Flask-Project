@@ -1,11 +1,11 @@
 -- Run this using a SQLite browser or via Python script
-CREATE TABLE datacenter (
+CREATE TABLE IF NOT EXISTS datacenter (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     location TEXT NOT NULL,
     capacity INTEGER NOT NULL
 );
 
-CREATE TABLE inventory (
+CREATE TABLE IF NOT EXISTS inventory (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     item_name TEXT NOT NULL,
     quantity INTEGER NOT NULL,
@@ -13,6 +13,12 @@ CREATE TABLE inventory (
     FOREIGN KEY(datacenter_id) REFERENCES datacenter(id)
 );
 
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    role TEXT DEFAULT 'user'
+);
 -- Datacenters
 INSERT INTO datacenter (location, capacity) VALUES 
 ('New York', 1000),

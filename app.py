@@ -1,12 +1,14 @@
-from flask import Flask, current_app, render_template, request, jsonify
+from flask import Flask, current_app, render_template, request, jsonify, session, redirect, url_for, flash
 from db import get_db, close_db, init_app
 from inventory import add_item, get_items, update_item, delete_item
 from datacenter import add_datacenter, get_datacenters, update_datacenter, delete_datacenter
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config.from_mapping(
     DATABASE="datacenter.db",
 )
+app.secret_key = 'your_secret_key'
 
 init_app(app)
 
@@ -20,6 +22,68 @@ def initdb_command():
     """Initializes the database."""
     init_db()
     print('Initialized the database.')
+
+#Login & Registration Routes
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    db = get_db()
+    if request.method == 'POST':
+        username = request.form['username']
+        password = generate_password_hash(request.form['password'])
+        role = request.form['role']
+
+        try:
+            db.execute('INSERT INTO users (username, password, role) VALUES (?, ?, ?)', 
+                       (username, password, role))
+            db.commit()
+            flash('Registration successful! Please log in.')
+            return redirect(url_for('login'))
+        except:
+            flash('Username already exists. Please choose a different username.')
+            return redirect(url_for('register'))
+
+    return render_template('register.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username'] 
+        password = request.form['password']
+        db = get_db()
+        user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+
+        if user and check_password_hash(user['password'], password): 
+            session['user_id'] = user['id']
+            session['username'] = user['username']
+            session['role'] = user['role']
+            flash('Login successful!')
+
+            return redirect(url_for('admin' if user['role'] == 'admin' else 'user'))
+        else:
+            flash('Invalid username or password.')
+            return redirect(url_for('login'))
+
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You have been logged out.')
+    return redirect(url_for('login'))
+
+@app.route('/admin')
+def admin():
+    if session.get('role') != 'admin':
+        flash('Access denied.')
+        return redirect(url_for('login'))
+    return render_template('admin.html')
+
+@app.route('/user')
+def user():
+    if not session.get('username'):
+        flash('Access denied.')
+        return redirect(url_for('login'))
+    return render_template('user.html')
     
 @app.route('/inventory')
 def inventory():
