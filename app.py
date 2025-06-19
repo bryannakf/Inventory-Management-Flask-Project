@@ -43,21 +43,69 @@ def api_get_items():
         {'id': item['id'], 'item_name': item['item_name'], 'quantity': item['quantity'], 'datacenter_id': item['datacenter_id']}
         for item in items
     ])
-
 @app.route("/api/item/<int:id>", methods=["PUT"])
 def api_update_item(id):
     data = request.get_json()
+
     quantity = data.get("quantity")
     datacenter_id = data.get("datacenter_id")
-    if not quantity or not datacenter_id:
+
+    if quantity is None or datacenter_id is None:
         return jsonify({"error": "Quantity and Datacenter ID required"}), 400
-    update_item(id, quantity, datacenter_id)
+
+    updated = update_item(id, quantity, datacenter_id)
+    if updated == 0:
+        return jsonify({"error": "Item not found"}), 404
+
     return jsonify({"message": "Item updated"}), 200
+
+# @app.route("/api/item/<int:id>", methods=["PUT"])
+# def api_update_item(id):
+#     data = request.get_json()
+
+#     quantity = data.get("quantity")
+#     datacenter_id = data.get("datacenter_id")
+
+#     # Validate inputs (handle zeroes correctly)
+#     if quantity is None or datacenter_id is None:
+#         return jsonify({"error": "Quantity and Datacenter ID required"}), 400
+
+#     # Check if item exists
+#     items = get_items()
+#     item_exists = any(item["id"] == id for item in items)
+#     if not item_exists:
+#         return jsonify({"error": "Item not found"}), 404
+
+#     # If all good, update item
+#     update_item(id, quantity, datacenter_id)
+#     return jsonify({"message": "Item updated"}), 200
 
 @app.route("/api/item/<int:id>", methods=["DELETE"])
 def api_delete_item(id):
+    items = get_items()
+    item_exists = any(item["id"] == id for item in items)
+    if not item_exists:
+        return jsonify({"error": "Item not found"}), 404
+
     delete_item(id)
     return jsonify({"message": "Item deleted"}), 200
+
+
+# @app.route("/api/item/<int:id>", methods=["PUT"])
+# def api_update_item(id):
+#     data = request.get_json()
+    
+#     quantity = data.get("quantity")
+#     datacenter_id = data.get("datacenter_id")    
+#     if not quantity or not datacenter_id:
+#         return jsonify({"error": "Quantity and Datacenter ID required"}), 400
+#     update_item(id, quantity, datacenter_id)
+#     return jsonify({"message": "Item updated"}), 200
+
+# @app.route("/api/item/<int:id>", methods=["DELETE"])
+# def api_delete_item(id):
+#     delete_item(id)
+#     return jsonify({"message": "Item deleted"}), 200
 
 
 
@@ -87,16 +135,24 @@ def api_get_datacenters():
 def api_update_datacenter(id):
     data = request.get_json()
     capacity = data.get("capacity")
-    if not capacity:
+
+    if capacity is None:
         return jsonify({"error": "Capacity required"}), 400
+
+    datacenters = get_datacenters()
+    datacenter_exists = any(dc["id"] == id for dc in datacenters)
+    if not datacenter_exists:
+        return jsonify({"error": "Datacenter not found"}), 404
+
     update_datacenter(id, capacity)
     return jsonify({"message": "Datacenter updated"}), 200
 
 @app.route("/api/datacenter/<int:id>", methods=["DELETE"])
 def api_delete_datacenter(id):
+    datacenters = get_datacenters()
+    datacenter_exists = any(dc["id"] == id for dc in datacenters)
+    if not datacenter_exists:
+        return jsonify({"error": "Datacenter not found"}), 404
+
     delete_datacenter(id)
     return jsonify({"message": "Datacenter deleted"}), 200
-
-
-
-

@@ -10,11 +10,12 @@ def get_items():
     db = get_db()
     return db.execute('SELECT* FROM inventory').fetchall()
 
-def update_item(item_id, quantity, datacenter_id):
+def update_item(id, quantity, datacenter_id):
     db = get_db()
-    db.execute('UPDATE inventory SET quantity = ?, datacenter_id = ? WHERE id = ?', (quantity, datacenter_id, item_id))
+    cursor = db.execute('UPDATE inventory SET quantity = ?, datacenter_id = ? WHERE id = ?', (quantity, datacenter_id, id))
     #db.execute('UPDATE inventory SET quantity = ?,  WHERE id =?', (quantity, item_id))
     db.commit()
+    return cursor.rowcount
     
 def delete_item(item_id):
     db = get_db()
