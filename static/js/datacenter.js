@@ -51,6 +51,7 @@ document
       .catch((err) => {
         showMessage("Error adding datacenter", "red");
         console.error("Add error:", err);
+
       });
   });
 

@@ -40,6 +40,7 @@
     </form>
 
     <!-- Delete Datacenter Form -->
+    {% if session.get('role') == 'admin' %}
     <h2>Delete Datacenter</h2>
     <form id="deleteDatacenterForm">
       <input
@@ -50,6 +51,8 @@
       />
       <button type="submit">Delete</button>
     </form>
+    {% endif %}
+
     <!-- Display List of Datacenters -->
     <h2>All Datacenters</h2>
 
