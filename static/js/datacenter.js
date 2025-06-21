@@ -2,6 +2,49 @@ console.log("✅ datacenter.js loaded");
 
 document.addEventListener("DOMContentLoaded", getDatacenters);
 
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutLink = document.getElementById("logoutLink");
+
+  if (logoutLink) {
+    logoutLink.addEventListener("click", function (e) {
+      const confirmed = confirm("Are you sure you want to log out?");
+      if (!confirmed) {
+        e.preventDefault(); // Cancel the logout
+      }
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const adminLink = document.getElementById("adminLink");
+
+  if (adminLink) {
+    adminLink.addEventListener("click", function (e) {
+      const confirmed = confirm(
+        "Are you sure you want to leave the application?"
+      );
+      if (!confirmed) {
+        e.preventDefault();
+      }
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const userLink = document.getElementById("userLink");
+
+  if (userLink) {
+    userLink.addEventListener("click", function (e) {
+      const confirmed = confirm(
+        "Are you sure you want to leave the application?"
+      );
+      if (!confirmed) {
+        e.preventDefault();
+      }
+    });
+  }
+});
+
 // Fetch and display all datacenters
 function getDatacenters() {
   fetch("/api/datacenters")
@@ -51,7 +94,6 @@ document
       .catch((err) => {
         showMessage("Error adding datacenter", "red");
         console.error("Add error:", err);
-
       });
   });
 
