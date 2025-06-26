@@ -1,4 +1,4 @@
-console.log("✅ datacenter.js loaded");
+console.log("datacenter.js loaded");
 
 document.addEventListener("DOMContentLoaded", getDatacenters);
 

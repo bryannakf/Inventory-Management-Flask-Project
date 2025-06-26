@@ -70,7 +70,7 @@
     </table>
 
     <div id="datacenterList"></div>
-    <!--Links to logout and admin page-->
+    <!--Links to logout and admin/user pages-->
     <p><a href="{{ url_for('logout') }}" id="logoutLink">Logout</a></p>
     {% if session.get('role') == 'admin' %}
     <p><a href="{{ url_for('admin') }}" id="adminLink">Admin Page</a></p>

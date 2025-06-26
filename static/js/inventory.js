@@ -165,7 +165,7 @@ function showMessage(text, color) {
   if (!msgDiv) {
     msgDiv = document.createElement("div");
     msgDiv.id = "message";
-    document.body.prepend(msgDiv); // Add message div if missing
+    document.body.prepend(msgDiv); 
   }
 
   msgDiv.textContent = text;
