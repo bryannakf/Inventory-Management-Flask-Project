@@ -36,3 +36,5 @@
     <script src="{{ url_for('static', filename='js/datacenter.js') }}"></script>
   </body>
 </html>
+
+http://inventory-env.eba-kqzf7gvm.us-west-2.elasticbeanstalk.com/register

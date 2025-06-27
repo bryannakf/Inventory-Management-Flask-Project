@@ -22,6 +22,11 @@ def initdb_command():
     """Initializes the database."""
     init_db()
     print('Initialized the database.')
+    
+@app.route('/')
+def index():
+    return redirect(url_for('login'))  # or render_template('index.html') if you have one
+
 
 #Login & Registration Routes
 @app.route('/register', methods=['GET', 'POST'])
@@ -180,3 +185,5 @@ def api_delete_datacenter(id):
 
     delete_datacenter(id)
     return jsonify({"message": "Datacenter deleted"}), 200
+
+application = app
