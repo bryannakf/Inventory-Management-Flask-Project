@@ -12,8 +12,6 @@ def close_db(e=None):
     db = g.pop('db', None)
     if db is not None:
         db.close()
-        
-
 
 # import sqlite3
 # from flask import g

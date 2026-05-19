@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config.from_mapping(
-    DATABASE="datacenter.db",
+    DATABASE="data.db",
 )
 app.secret_key = 'your_secret_key'
 

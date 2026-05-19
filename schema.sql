@@ -19,6 +19,26 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT NOT NULL,
     role TEXT DEFAULT 'user'
 );
+
+CREATE TABLE IF NOT EXISTS actionsAudit (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    action TEXT NOT NULL,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- db.execute("""
+-- CREATE TABLE IF NOT EXISTS actionsAudit (
+--     id INTEGER PRIMARY KEY AUTOINCREMENT,
+--     username TEXT NOT NULL,
+--     action TEXT NOT NULL,
+--     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+-- )
+-- """)
+
+-- conn.commit()
+-- conn.close()
+
 -- Datacenters
 INSERT INTO datacenter (location, capacity) VALUES 
 ('New York', 1000),
@@ -44,3 +64,4 @@ INSERT INTO inventory (item_name, quantity, datacenter_id) VALUES
 ('Cooling Fan', 18, 8),
 ('Firewall Device', 6, 9),
 ('Load Balancer', 11, 10);
+

@@ -8,6 +8,12 @@ def add_datacenter(location, capacity):
         (location, capacity)
     )
     db.commit()
+    db.execute(
+        'INSERT INTO actionsAudit (username, action) VALUES (?, ?)',
+        ('admin', f'Added datacenter at {location} with capacity {capacity}')
+    )
+    db.commit()
+    
 
 # Read
 def get_datacenters():
@@ -21,10 +27,18 @@ def update_datacenter(datacenter_id, capacity):
         'UPDATE datacenter SET capacity = ? WHERE id = ?',
         (capacity, datacenter_id)
     )
+    db.execute(
+        'INSERT INTO actionsAudit (username, action) VALUES (?, ?)',
+        ('admin', f'Updated datacenter {datacenter_id} with new capacity {capacity}')
+    )
     db.commit()
 
 # Delete
 def delete_datacenter(datacenter_id):
     db = get_db()
     db.execute('DELETE FROM datacenter WHERE id = ?', (datacenter_id,))
+    db.execute(
+        'INSERT INTO actionsAudit (username, action) VALUES (?, ?)',
+        ('admin', f'Deleted datacenter {datacenter_id}')
+    )
     db.commit()
