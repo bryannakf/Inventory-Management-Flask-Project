@@ -68,6 +68,7 @@ function getDatacenters() {
     });
 }
 
+
 // Add datacenter
 document
   .getElementById("addDatacenterForm")

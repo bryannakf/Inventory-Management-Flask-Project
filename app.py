@@ -25,7 +25,7 @@ def initdb_command():
     
 @app.route('/')
 def index():
-    return redirect(url_for('login'))  # or render_template('index.html') if you have one
+    return redirect(url_for('register'))  
 
 
 #Login & Registration Routes
@@ -93,6 +93,13 @@ def user():
 @app.route('/inventory')
 def inventory():
     return render_template('inventory.html')
+
+@app.route('/actionsAudit')
+def actionsAudit():
+    if session.get('role') != 'admin':
+        flash('Access denied.')
+        return redirect(url_for('login'))
+    return render_template('actionsAudit.html')
 
 @app.route('/api/item', methods=['POST'])
 def api_add_item():
@@ -185,5 +192,14 @@ def api_delete_datacenter(id):
 
     delete_datacenter(id)
     return jsonify({"message": "Datacenter deleted"}), 200
+
+@app.route('/api/actionsAudit')
+def api_get_actions_audit():
+    db = get_db()
+    audits = db.execute('SELECT * FROM actionsAudit ORDER BY timestamp DESC').fetchall()
+    return jsonify([
+        {'id': audit['id'], 'user': audit['username'], 'action': audit['action'], 'timestamp': audit['timestamp']}
+        for audit in audits
+    ])
 
 application = app
