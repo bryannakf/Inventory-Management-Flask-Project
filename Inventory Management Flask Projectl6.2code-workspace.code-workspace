@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "Inventory Management Flask Project",
+      "path": ".",
+    },
+  ],
+  "settings": {},
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      
+      {
+        "type": "db2DevExtSqlSpDbg",
+        "request": "launch",
+        "name": "Db2 Developer Extension Stored Procedure Debug",
+        "program": "${file}",
+      },
+    ],
+  },
+}
